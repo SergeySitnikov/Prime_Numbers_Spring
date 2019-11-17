@@ -1,7 +1,6 @@
 package com.netcracker.primenumbers.config;
 
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //@Qualifier("userDetailsServiceImpl")
+    @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -28,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login/**", "registration/**", "/", "img/**", "/js/**", "/css/**").permitAll()
                 .antMatchers("/login/**", "registration/**").anonymous()
-                .antMatchers("").hasRole("ADMIN")
+                .antMatchers("/").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
