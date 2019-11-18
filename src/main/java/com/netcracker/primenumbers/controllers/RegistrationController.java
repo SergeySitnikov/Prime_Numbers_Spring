@@ -48,12 +48,14 @@ public class RegistrationController {
             jsonResponse.setValidated(false);
             jsonResponse.setErrorMessages(errors);
         } else {
-            if (this.userService.userWithLoginExists(userRegistrationForm.getLogin())) {
-                jsonResponse.setValidated(false);
-                jsonResponse.getErrorMessages().put("loginExists", "User with login already exists");
-            } else {
-                this.userService.createUserFromRegistrationForm(userRegistrationForm);
-                jsonResponse.setValidated(true);
+            synchronized (userService) {
+                if (this.userService.userWithLoginExists(userRegistrationForm.getLogin())) {
+                    jsonResponse.setValidated(false);
+                    jsonResponse.getErrorMessages().put("loginExists", "User with login already exists");
+                } else {
+                    this.userService.createUserFromRegistrationForm(userRegistrationForm);
+                    jsonResponse.setValidated(true);
+                }
             }
         }
         return jsonResponse;
