@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUserFromRegistrationForm(UserRegistrationForm userForm) {
+    public void createUserFromRegistrationForm(UserRegistrationForm userForm) throws SQLException {
         User user = new User();
         BeanUtils.copyProperties(userForm, user);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));

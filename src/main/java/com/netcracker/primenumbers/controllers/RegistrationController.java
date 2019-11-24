@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class RegistrationController {
             jsonResponse.setValidated(false);
             jsonResponse.setErrorMessages(errors);
         } else {
-            synchronized (userService) {
+            try {
                 if (this.userService.userWithLoginExists(userRegistrationForm.getLogin())) {
                     jsonResponse.setValidated(false);
                     jsonResponse.getErrorMessages().put("loginExists", "User with login already exists");
@@ -56,6 +57,7 @@ public class RegistrationController {
                     this.userService.createUserFromRegistrationForm(userRegistrationForm);
                     jsonResponse.setValidated(true);
                 }
+            } catch (SQLException ex) {
             }
         }
         return jsonResponse;

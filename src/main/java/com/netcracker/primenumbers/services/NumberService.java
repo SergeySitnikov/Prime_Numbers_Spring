@@ -1,8 +1,10 @@
 package com.netcracker.primenumbers.services;
 
-import java.util.Optional;
+import com.netcracker.primenumbers.domain.logicOfApp.ResultOfPrime;
+
+import java.sql.SQLException;
 
 public interface NumberService {
-    Byte getResult(long number);
-    void addNumber(long number, boolean result);
+    ResultOfPrime getResult(long number);
+    void addNumber(long number, boolean result) throws SQLException;
 }

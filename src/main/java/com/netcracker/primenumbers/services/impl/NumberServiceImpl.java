@@ -2,6 +2,7 @@ package com.netcracker.primenumbers.services.impl;
 
 import com.netcracker.primenumbers.dao.NumberRepository;
 import com.netcracker.primenumbers.domain.entities.Number;
+import com.netcracker.primenumbers.domain.logicOfApp.ResultOfPrime;
 import com.netcracker.primenumbers.services.NumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,14 @@ public class NumberServiceImpl implements NumberService {
     private NumberRepository numberRepository;
 
     @Override
-    public Byte getResult(long number) {
+    public ResultOfPrime getResult(long number) {
         Optional<Number> byNumberValue = numberRepository.findByNumberValue(number);
         if (byNumberValue.isPresent()) {
             boolean tmp = byNumberValue.get().isPrime();
-            if (tmp) return 0;
-            return 1;
+            if (tmp) return ResultOfPrime.PRIME;
+            return ResultOfPrime.NOT_PRIME;
         }
-        return 2;
+        return ResultOfPrime.NOT_EXIST;
     }
 
     @Override
@@ -33,3 +34,4 @@ public class NumberServiceImpl implements NumberService {
         this.numberRepository.save(n);
     }
 }
+

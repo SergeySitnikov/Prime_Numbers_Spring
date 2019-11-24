@@ -5,6 +5,7 @@ import com.netcracker.primenumbers.domain.entities.User;
 import com.netcracker.primenumbers.forms.UserRegistrationForm;
 import org.springframework.security.core.Authentication;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public interface UserService {
@@ -16,7 +17,7 @@ public interface UserService {
 
     Boolean userWithLoginExists(String login);
 
-    void createUserFromRegistrationForm(UserRegistrationForm userForm);
+    void createUserFromRegistrationForm(UserRegistrationForm userForm) throws SQLException;
 
 
 

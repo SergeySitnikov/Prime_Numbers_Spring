@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-Login
 <a href="/registration">Reg</a>
+<form th:action="@{/login}" method="post">
+    <!--<input type="text" name="login" th:value="${login}">-->
+    <!--<label th:text="Enter login"></label>-->
+    <!--<input type="text" name="password" th:value="${password}">-->
+    <!--<label th:text="Enter login"></label>-->
+</form>
 </body>
 </html>
