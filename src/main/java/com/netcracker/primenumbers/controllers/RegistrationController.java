@@ -2,22 +2,17 @@ package com.netcracker.primenumbers.controllers;
 
 
 import com.netcracker.primenumbers.forms.UserRegistrationForm;
-import com.netcracker.primenumbers.forms.responses.JsonResponse;
 import com.netcracker.primenumbers.forms.validators.UserRegistrationFormValidator;
 import com.netcracker.primenumbers.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/registration")
@@ -39,28 +34,24 @@ public class RegistrationController {
         return "authorization/registration";
     }
 
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public JsonResponse newUser(@ModelAttribute @Valid UserRegistrationForm userRegistrationForm, BindingResult result) {
-        JsonResponse jsonResponse = new JsonResponse();
+
+    @PostMapping
+    public String newUser(@ModelAttribute @Valid UserRegistrationForm userRegistrationForm, BindingResult result) {
+        userRegistrationForm.setRole("USER");
         if (result.hasErrors()) {
-            Map<String, String> errors = result.getFieldErrors().stream()
-                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-            jsonResponse.setValidated(false);
-            jsonResponse.setErrorMessages(errors);
-        } else {
-            try {
-                if (this.userService.userWithLoginExists(userRegistrationForm.getLogin())) {
-                    jsonResponse.setValidated(false);
-                    jsonResponse.getErrorMessages().put("loginExists", "User with login already exists");
-                } else {
-                    this.userService.createUserFromRegistrationForm(userRegistrationForm);
-                    jsonResponse.setValidated(true);
-                }
-            } catch (SQLException ex) {
-            }
+            return "redirect:/registration";
         }
-        return jsonResponse;
+        try {
+            if (this.userService.userWithLoginExists(userRegistrationForm.getLogin())) {
+                return "redirect:/registration";
+            } else {
+                this.userService.createUserFromRegistrationForm(userRegistrationForm);
+                return "redirect:/login";
+            }
+        } catch (SQLException ex) {
+            return "redirect:/registration";
+        }
+
     }
 
 }
