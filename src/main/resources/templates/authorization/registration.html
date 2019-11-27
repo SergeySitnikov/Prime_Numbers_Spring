@@ -2,23 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{title.registration}"></title>
+    <link rel="stylesheet" th:href="@{/css/authorization.css}">
 </head>
 <body>
 <form name="userForm" method="post" novalidate th:action="@{/registration}">
-    <div>
+    <div class="border">
+    <div class="login">
+        <label th:text="#{enter.login}"></label>
         <input type="text" name="login" required>
-        <label> Enter login </label>
     </div>
-    <div>
+    <div class="password">
+        <label th:text="#{enter.password}"></label>
         <input type="password" name="password" required>
-        <label> Enter password </label>
     </div>
     <div>
         <input type="hidden" name="role" value="USER">
     </div>
 
-    <input type="submit" id="sendButton">
+    <button type="submit" class="button" th:text="#{registration.button.text}"></button>
+    </div>
 </form>
 
 </body>

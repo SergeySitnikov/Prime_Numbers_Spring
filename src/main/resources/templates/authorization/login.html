@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{title.login}"></title>
+    <link rel="stylesheet" th:href="@{/css/authorization.css}">
 </head>
 <body>
-<a href="/registration">Reg</a>
 <form th:action="@{/login}" method="post">
-    <div>
-        <input type="text" name="username" required>
-        <label> Enter login </label>
+    <div class="border">
+        <div class="login">
+            <label th:text="#{enter.login}"></label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="password">
+            <label th:text="#{enter.password}"></label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit" th:text="#{login.button.text}" class="button"></button>
     </div>
-    <div>
-        <input type="password" name="password" required>
-        <label> Enter password </label>
-    </div>
-    <input type="submit">
 </form>
+<a href="/registration" id="link"><button   th:text="#{login.link.registration}"></button></a>
 </body>
 </html>

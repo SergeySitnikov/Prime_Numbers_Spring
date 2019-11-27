@@ -9,6 +9,8 @@ import com.netcracker.primenumbers.forms.UserRegistrationForm;
 import com.netcracker.primenumbers.services.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,5 +61,10 @@ public class UserServiceImpl implements UserService {
         roles.add(this.roleRepository.findByRole("USER"));
         user.setRoles(roles);
         this.userRepository.save(user);
+    }
+
+    @Override
+    public Page<User> getAllUsers(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 }

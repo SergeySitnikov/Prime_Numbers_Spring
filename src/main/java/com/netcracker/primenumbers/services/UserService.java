@@ -3,6 +3,8 @@ package com.netcracker.primenumbers.services;
 
 import com.netcracker.primenumbers.domain.entities.User;
 import com.netcracker.primenumbers.forms.UserRegistrationForm;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
 import java.sql.SQLException;
@@ -18,6 +20,8 @@ public interface UserService {
     Boolean userWithLoginExists(String login);
 
     void createUserFromRegistrationForm(UserRegistrationForm userForm) throws SQLException;
+
+    Page<User> getAllUsers(Pageable pageable);
 
 
 

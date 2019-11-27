@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login/**", "/registration/**", "img/**", "/js/**", "/css/**").permitAll()
                 .antMatchers("/login/**", "/registration/**").anonymous()
-                //.antMatchers("/patter").hasRole("ADMIN")
+                .antMatchers("/adminPanel").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -36,10 +36,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/find")
                 .permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
     }
 
 

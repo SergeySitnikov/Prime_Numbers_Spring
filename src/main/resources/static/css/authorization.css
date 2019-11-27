@@ -1,0 +1,44 @@
+.login {
+    position: absolute;
+    left: 40%;
+    top: 25%;
+}
+
+.password {
+    position: absolute;
+    left: 39.5%;
+    top: 30%;
+}
+
+.button {
+    position: absolute;
+    left: 44%;
+    top: 35%;
+}
+
+.border {
+    margin: 15% 37%;
+    width: 350px;
+    height: 200px;
+    border: solid black;
+    border-radius: 7px;
+}
+#link {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+}
+#answer {
+    position: absolute;
+    left: 40%;
+    top: 35%;
+}
+#logout {
+    position: absolute;
+    left: 95%;
+}
+#adminPanel {
+    position: absolute;
+    left: 85%;
+
+}

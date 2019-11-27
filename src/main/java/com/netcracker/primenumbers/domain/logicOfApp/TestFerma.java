@@ -11,7 +11,6 @@ public class TestFerma extends Methods implements SearchPrimeNumbers {
     }
 
     public boolean isPrimeNumber() {
-        long t1 = System.nanoTime();
         if (number == 2) {
             return true;
         }
@@ -28,7 +27,6 @@ public class TestFerma extends Methods implements SearchPrimeNumbers {
         } else {
             return false;
         }
-        System.out.println(System.nanoTime() - t1 + " ferma");
         return true;
 
     }

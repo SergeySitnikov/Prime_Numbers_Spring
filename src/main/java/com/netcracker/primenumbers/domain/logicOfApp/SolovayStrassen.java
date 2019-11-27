@@ -9,7 +9,6 @@ public class SolovayStrassen extends TestFerma implements SearchPrimeNumbers {
     public SolovayStrassen() {}
 
     public boolean isPrimeNumber() {
-        long t1 = System.nanoTime();
         if (number == 2) {
             return true;
         }
@@ -30,7 +29,6 @@ public class SolovayStrassen extends TestFerma implements SearchPrimeNumbers {
         } else {
             return false;
         }
-        System.out.println(System.nanoTime() - t1 + " solovay");
         return true;
     }
 
