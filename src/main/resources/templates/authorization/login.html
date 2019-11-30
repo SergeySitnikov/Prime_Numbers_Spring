@@ -7,8 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/authorization.css}">
 </head>
 <body>
+<div class="border">
 <form th:action="@{/login}" method="post">
-    <div class="border">
+    <div >
         <div class="login">
             <label th:text="#{enter.login}"></label>
             <input type="text" name="username" required>
@@ -21,5 +22,6 @@
     </div>
 </form>
 <a href="/registration" id="link"><button   th:text="#{login.link.registration}"></button></a>
+</div>
 </body>
 </html>

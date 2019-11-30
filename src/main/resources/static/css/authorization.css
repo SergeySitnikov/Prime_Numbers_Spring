@@ -1,37 +1,28 @@
 .login {
-    position: absolute;
-    left: 40%;
-    top: 25%;
+    margin: 0 auto;
 }
 
 .password {
-    position: absolute;
-    left: 39.5%;
-    top: 30%;
+    margin: 0 auto;
 }
 
 .button {
-    position: absolute;
-    left: 44%;
-    top: 35%;
+    margin: 0 auto;
 }
 
 .border {
-    margin: 15% 37%;
+    margin: 0 auto;
     width: 350px;
-    height: 200px;
+    height: 100px;
     border: solid black;
     border-radius: 7px;
 }
 #link {
-    position: absolute;
-    left: 50%;
-    top: 35%;
+    margin: 0 auto;
 }
 #answer {
-    position: absolute;
-    left: 40%;
-    top: 35%;
+    margin: 0 auto;
+
 }
 #logout {
     position: absolute;
@@ -39,6 +30,10 @@
 }
 #adminPanel {
     position: absolute;
-    left: 85%;
+    left: 82%;
 
+}
+
+#wrapper {
+    margin-left: 85%;
 }

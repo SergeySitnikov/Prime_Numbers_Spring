@@ -8,11 +8,13 @@
     <link rel="stylesheet" th:href="@{/css/authorization.css}">
 </head>
 <body>
-<div>
-    <a  th:href="@{/adminPanel}" id="adminPanel"></a>
-    <a th:href="@{/logout}" id="logout"> <button th:text="#{main.logout}"></button></a>
-    <a sec:authorize="hasRole('ADMIN')"  th:href="@{/adminpanel}"
-       th:text="#{link.admin.panel}"></a>
+<div id="wrapper" sec:authorize="isAuthenticated()">
+    <a th:href="@{/logout}">
+        <button th:text="#{main.logout}"></button>
+    </a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/adminpanel}">
+        <button th:text="#{link.admin.panel}"></button>
+    </a>
 </div>
 <div class="login">
     <label th:text="#{enter.number}"></label>

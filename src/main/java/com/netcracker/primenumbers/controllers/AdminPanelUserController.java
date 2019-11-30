@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/adminPanel")
+@RequestMapping("/adminpanel")
 public class AdminPanelUserController {
     private static final int INITIAL_PAGE_SIZE = 10;
 

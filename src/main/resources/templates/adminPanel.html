@@ -5,12 +5,12 @@
     <title th:text="#{title.admin}"></title>
 </head>
 <body>
-<h2 class="settings-section__title" th:text="#{settings.section.users.title}"></h2>
-<table class="settings-section__table">
+<h2 th:text="#{title.admin}"></h2>
+<table>
     <tr>
         <th th:text="#{settings.section.users.table.id}"></th>
         <th th:text="#{settings.section.users.table.login}"></th>
-        <th th:text="#{settings.section.users.table.type}"></th>
+        <th th:text="#{settings.section.users.table.role}"></th>
         <th></th>
         <th></th>
     </tr>
@@ -21,7 +21,7 @@
             <td th:text="${u.userId}"></td>
             <td th:text="${u.login}"></td>
             <td class="td"
-                th:text="${u.hasRole('ADMIN')}? #{account.type.admin}: #{account.type.user})"></td>
+                th:text="${u.hasRole('ADMIN')}? #{account.type.admin}: #{account.type.user}"></td>
             <td><a th:href="@{/adminpanel/users/__${u.userId}__}" th:text="#{settings.section.users.table.edit}"></a></td>
             <td><a th:href="@{/adminpanel/users/__${u.userId}__(delete='')}" th:text="#{settings.section.users.table.delete}"></a></td>
         </tr>
@@ -45,6 +45,5 @@
         </div>
     </nav>
 </table>
-
 </body>
 </html>

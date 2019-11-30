@@ -25,7 +25,7 @@ public class User {
     }
 
     public Boolean hasRole(String role) {
-        return this.roles.stream().anyMatch(role::equals);
+        return this.roles.stream().map(x->x.getRole()).anyMatch(role::equals);
     }
 
     public Long getUserId() { return userId; }
