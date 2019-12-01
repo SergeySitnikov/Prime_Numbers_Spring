@@ -58,8 +58,8 @@ public class AdminPanelUserController {
                 return "redirect:/adminpanel";
             }
             Optional<User> user = this.userService.getUserById(idL);
-            model.addAttribute("u", user);
-            model.addAttribute("UserChangeForm", userChangeForm);
+            model.addAttribute("u", user.orElse(null));
+            model.addAttribute("userChangeForm", userChangeForm);
             return "adminPanel/user";
         } catch (NumberFormatException ex) {
             return "redirect:/adminpanel";
@@ -73,10 +73,10 @@ public class AdminPanelUserController {
             Optional<User> user = this.userService.getUserById(idL);
             model.addAttribute("u", user.orElse(null));
             if (binding.hasErrors()) {
-                return "adminPanel/user";
+                return "adminPanel/adminPanel";
             }
             this.userService.changeUser(userChangeForm, idL);
-            return "redirect:/adminpanel/users/" + idL;
+            return "redirect:/adminpanel/" + idL;
         } catch (NumberFormatException | UserDoesNotExist | InvalidLogin  ex) {
             return "redirect:/adminpanel";
         }
