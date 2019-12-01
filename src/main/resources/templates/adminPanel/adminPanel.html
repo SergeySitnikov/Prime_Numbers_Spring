@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{title.admin}"></title>
@@ -22,28 +23,33 @@
             <td th:text="${u.login}"></td>
             <td class="td"
                 th:text="${u.hasRole('ADMIN')}? #{account.type.admin}: #{account.type.user}"></td>
-            <td><a th:href="@{/adminpanel/users/__${u.userId}__}" th:text="#{settings.section.users.table.edit}"></a></td>
-            <td><a th:href="@{/adminpanel/users/__${u.userId}__(delete='')}" th:text="#{settings.section.users.table.delete}"></a></td>
+            <td><a th:href="@{/adminpanel/__${u.userId}__}" th:text="#{settings.section.users.table.edit}"></a></td>
+            <td><a th:href="@{/adminpanel/__${u.userId}__(delete='')}" th:text="#{settings.section.users.table.delete}"></a></td>
         </tr>
 
     </th:block>
-    <nav class="pagination" th:if="${users.totalPages > 1}">
-        <div class="pagination-list">
-            <a th:if="${users.hasPrevious()}" class="pagination__item pagination__item--arrow"
+</table>
+    <nav th:if="${users.totalPages > 1}">
+        <div>
+            <a th:if="${users.hasPrevious()}"
                th:href="@{/adminpanel(page = ${users.number - 1})}">&#8592;</a>
 
             <th:block th:each="i : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a th:if="${users.number == i - 1 }" class="pagination__item  pagination__item--active"
+                <a th:if="${users.number == i - 1 }"
                    th:text="${i}"
                    th:href="@{/adminpanel(page = ${i} - 1)}"></a>
-                <a th:unless="${users.number == i - 1}" class="pagination__item"
+                <a th:unless="${users.number == i - 1}"
                    th:href="@{/adminpanel(page = ${i} - 1)}" th:text="${i}"></a>
             </th:block>
             </a>
-            <a th:if="${users.hasNext()}" class="pagination__item pagination__item--arrow"
+            <a th:if="${users.hasNext()}"
                th:href="@{/adminpanel(page = ${users.number + 1})}">&#8594;</a>
         </div>
     </nav>
-</table>
+<div id="wrapper" sec:authorize="isAuthenticated()">
+    <a th:href="@{/find}">
+        <button th:text="#{panel.button.back}"></button>
+    </a>
+</div>
 </body>
 </html>

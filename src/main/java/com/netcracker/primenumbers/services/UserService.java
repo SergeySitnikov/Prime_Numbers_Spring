@@ -2,6 +2,9 @@ package com.netcracker.primenumbers.services;
 
 
 import com.netcracker.primenumbers.domain.entities.User;
+import com.netcracker.primenumbers.exceptions.InvalidLogin;
+import com.netcracker.primenumbers.exceptions.UserDoesNotExist;
+import com.netcracker.primenumbers.forms.UserChangeForm;
 import com.netcracker.primenumbers.forms.UserRegistrationForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,10 @@ public interface UserService {
     void createUserFromRegistrationForm(UserRegistrationForm userForm) throws SQLException;
 
     Page<User> getAllUsers(Pageable pageable);
+
+    void deleteUser(Long id);
+
+    void changeUser(UserChangeForm form, long id) throws UserDoesNotExist, InvalidLogin;
 
 
 

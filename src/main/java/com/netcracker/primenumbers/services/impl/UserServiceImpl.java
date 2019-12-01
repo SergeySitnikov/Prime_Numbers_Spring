@@ -5,6 +5,9 @@ import com.netcracker.primenumbers.dao.UserRepository;
 import com.netcracker.primenumbers.domain.UserDetailsImpl;
 import com.netcracker.primenumbers.domain.entities.Role;
 import com.netcracker.primenumbers.domain.entities.User;
+import com.netcracker.primenumbers.exceptions.InvalidLogin;
+import com.netcracker.primenumbers.exceptions.UserDoesNotExist;
+import com.netcracker.primenumbers.forms.UserChangeForm;
 import com.netcracker.primenumbers.forms.UserRegistrationForm;
 import com.netcracker.primenumbers.services.UserService;
 import org.springframework.beans.BeanUtils;
@@ -66,5 +69,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
         return this.userRepository.findAll(pageable);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        if (this.userRepository.countByUserId(id) != 0) {
+            this.userRepository.deleteByUserId(id);
+        }
+    }
+
+    @Override
+    public void changeUser(UserChangeForm form, long id) throws UserDoesNotExist, InvalidLogin {
+        Optional<User> optionalUser = this.getUserById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (this.userWithLoginExists(form.getLogin()) && user.getLogin().equals(form.getLogin())) {
+                throw new InvalidLogin();
+            }
+            user.setLogin(form.getLogin());
+            Set<Role> roles = new HashSet<>();
+            roles.add(this.roleRepository.findByRole("USER"));
+            if (form.getRole().equals("admin")) roles.add(this.roleRepository.findByRole("ADMIN"));
+            user.setRoles(roles);
+            this.userRepository.save(user);
+        } else throw new UserDoesNotExist();
     }
 }
