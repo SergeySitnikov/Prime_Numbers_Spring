@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<div th:text="${user.login}"></div>
+<label th:text="#{profile.label.all}"></label>
+<th:block th:each="number:${user.numbers}">
+    <div th:text="${number.numberValue}"></div>
+</th:block>
+<label th:text="#{profile.label.first}"></label>
+<th:block th:each="first:${user.firstInNumbers}">
+    <div th:text="${first.numberValue}"></div>
+</th:block>
+<a th:href="@{/find}"><button th:text="#{panel.button.back}"></button></a>
+</body>
+</html>

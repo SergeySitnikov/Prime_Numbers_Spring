@@ -1,8 +1,12 @@
 package com.netcracker.primenumbers.controllers;
 
+import com.netcracker.primenumbers.domain.UserDetailsImpl;
+import com.netcracker.primenumbers.domain.entities.User;
 import com.netcracker.primenumbers.domain.logicOfApp.*;
 import com.netcracker.primenumbers.services.NumberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +25,7 @@ public class NumberController {
     private NumberService numberService;
 
     @GetMapping()
-    public String findNumber(@RequestParam(required = false, value = "number") String number, Model model) {
+    public String findNumber(@RequestParam(required = false, value = "number") String number, Model model, Authentication auth) {
         if (number == null) {
             model.addAttribute("answer", "");
             return "finder";
@@ -33,9 +37,11 @@ public class NumberController {
             return "redirect:/find";
         }
         ResultOfPrime result = numberService.getResult(numberL);
+        User user = ((UserDetailsImpl) auth.getPrincipal()).getUser();
         switch(result) {
             case PRIME:
                 model.addAttribute("answer", "Your number is prime");
+
                 break;
             case NOT_PRIME:
                 model.addAttribute("answer", "Your number isn't prime");
@@ -53,7 +59,7 @@ public class NumberController {
                     }
                 }
                 try {
-                    this.numberService.addNumber(numberL, resultB);
+                    this.numberService.addNumber(numberL, resultB, user);
                 } catch (SQLException ex) {
 
                 }

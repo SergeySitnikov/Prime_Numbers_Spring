@@ -15,6 +15,7 @@
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/adminpanel}">
         <button th:text="#{link.admin.panel}"></button>
     </a>
+    <a th:href="@{/profile}"><button th:text="#{button.profile}"></button></a>
 </div>
 <div class="login">
     <label th:text="#{enter.number}"></label>

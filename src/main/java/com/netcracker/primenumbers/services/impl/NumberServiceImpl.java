@@ -1,13 +1,19 @@
 package com.netcracker.primenumbers.services.impl;
 
 import com.netcracker.primenumbers.dao.NumberRepository;
+import com.netcracker.primenumbers.domain.UserDetailsImpl;
 import com.netcracker.primenumbers.domain.entities.Number;
+import com.netcracker.primenumbers.domain.entities.User;
 import com.netcracker.primenumbers.domain.logicOfApp.ResultOfPrime;
 import com.netcracker.primenumbers.services.NumberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class NumberServiceImpl implements NumberService {
@@ -20,6 +26,7 @@ public class NumberServiceImpl implements NumberService {
         Optional<Number> byNumberValue = numberRepository.findByNumberValue(number);
         if (byNumberValue.isPresent()) {
             boolean tmp = byNumberValue.get().isPrime();
+            this.addUserToNumber(byNumberValue.get());
             if (tmp) return ResultOfPrime.PRIME;
             return ResultOfPrime.NOT_PRIME;
         }
@@ -27,11 +34,21 @@ public class NumberServiceImpl implements NumberService {
     }
 
     @Override
-    public void addNumber(long number, boolean result) {
+    public void addNumber(long number, boolean result, User user) {
         Number n = new Number();
         n.setNumberValue(number);
         n.setPrime(result);
+        n.setFirstUser(user);
+        Set<User> users = new HashSet<>();
+        users.add(user);
+        n.setUsers(users);
         this.numberRepository.save(n);
+    }
+
+    private void addUserToNumber(Number number) {
+        User user = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        number.getUsers().add(user);
+        this.numberRepository.save(number);
     }
 }
 

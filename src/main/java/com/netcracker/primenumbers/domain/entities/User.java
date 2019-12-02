@@ -8,7 +8,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "login", length = 15, nullable = false, unique = true)
@@ -18,10 +18,32 @@ public class User {
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},  fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Number> numbers;
+
+    @OneToMany(mappedBy = "firstUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE},  fetch = FetchType.EAGER)
+    private Set<Number> firstInNumbers;
+
     public User() {
+    }
+
+    public Set<Number> getFirstInNumbers() {
+        return firstInNumbers;
+    }
+
+    public void setFirstInNumbers(Set<Number> firstInNumbers) {
+        this.firstInNumbers = firstInNumbers;
+    }
+
+    public Set<Number> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(Set<Number> numbers) {
+        this.numbers = numbers;
     }
 
     public Boolean hasRole(String role) {
