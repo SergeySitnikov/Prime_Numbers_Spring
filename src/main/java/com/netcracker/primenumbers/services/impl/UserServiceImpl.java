@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = this.getUserById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (this.userWithLoginExists(form.getLogin()) && user.getLogin().equals(form.getLogin())) {
+            if (!user.getLogin().equals(form.getLogin()) && this.userWithLoginExists(form.getLogin())) {
                 throw new InvalidLogin();
             }
             user.setLogin(form.getLogin());

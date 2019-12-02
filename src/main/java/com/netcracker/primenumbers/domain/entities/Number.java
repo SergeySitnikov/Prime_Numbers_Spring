@@ -17,11 +17,11 @@ public class Number {
     @Column(name = "isPrime")
     private boolean isPrime;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "number_user", inverseJoinColumns = @JoinColumn(name = "user_id"), joinColumns = @JoinColumn(name = "number_id"))
-    private Set<User> users;
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+//    @JoinTable(name = "number_user", inverseJoinColumns = @JoinColumn(name = "user_id"), joinColumns = @JoinColumn(name = "number_id"))
+//    private Set<User> users;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User firstUser;
 
@@ -36,13 +36,13 @@ public class Number {
         this.firstUser = firstUser;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+//    public Set<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Set<User> users) {
+//        this.users = users;
+//    }
 
     public long getId() {
         return id;

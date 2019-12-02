@@ -41,7 +41,6 @@ public class NumberController {
         switch(result) {
             case PRIME:
                 model.addAttribute("answer", "Your number is prime");
-
                 break;
             case NOT_PRIME:
                 model.addAttribute("answer", "Your number isn't prime");
@@ -64,6 +63,7 @@ public class NumberController {
 
                 }
                 model.addAttribute("answer", resultB ? "Your number is prime" : "Your number isn't prime");
+                break;
         }
 
         return "finder";
