@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/find")
@@ -50,7 +51,7 @@ public class NumberController {
                 TestFerma ferma = new TestFerma(numberL);
                 SolovayStrassen solovayStrassen = new SolovayStrassen(numberL);
                 boolean resultB = false;
-                Optional<Boolean> any = Arrays.asList(millerRabin, ferma, solovayStrassen).stream().parallel().map(it -> it.isPrimeNumber()).filter(it -> it).findAny();
+                Optional<Boolean> any = Stream.of(millerRabin, ferma, solovayStrassen).parallel().map(it -> it.isPrimeNumber()).filter(it -> it).findAny();
                 if (any.isPresent()) {
                     SearchPrimeNumberByEnumeration enumeration = new SearchPrimeNumberByEnumeration(numberL);
                     if (enumeration.isPrimeNumber()) {

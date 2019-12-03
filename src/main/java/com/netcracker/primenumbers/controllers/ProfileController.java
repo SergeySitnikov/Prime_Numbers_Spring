@@ -13,22 +13,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/profile")
 public class ProfileController {
 
     @Autowired
     private NumberService numberService;
 
 
-    @GetMapping("/profile")
+    @GetMapping
     public String getProfile(Model model, Authentication authentication) {
         User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         model.addAttribute("user", user.getLogin());
         return "profile/profile";
     }
 
-    @GetMapping("/profile/my")
+    @GetMapping("/my")
     public String getMyNumbers(Model model, Authentication authentication,@PageableDefault() Pageable pageable) {
         User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         Page<Number> firstUserNumber = this.numberService.getFirstNumbersByUser(user, pageable);
@@ -38,13 +40,22 @@ public class ProfileController {
         return "profile/table";
     }
 
-    @GetMapping("/profile/all")
+    @GetMapping("/all")
     public String getAllNumbers(Model model, @PageableDefault()Pageable pageable) {
         Page<Number> allNumbers = this.numberService.getAll(pageable);
         Pager pager = new Pager(allNumbers.getTotalPages(), allNumbers.getNumber());
         model.addAttribute("numbers", allNumbers);
         model.addAttribute("pager", pager);
         return "profile/tableAll";
+    }
+
+    @GetMapping("/allMy")
+    public String getAllMyNumbers(Model model, @PageableDefault()Pageable pageable) {
+        Page<Number> allMyNumbers = this.numberService.getAllByUser(pageable);
+        model.addAttribute("numbers", allMyNumbers);
+        Pager pager = new Pager(allMyNumbers.getTotalPages(), allMyNumbers.getNumber());
+        model.addAttribute("pager", pager);
+        return "profile/tableAllMy";
     }
 
 }

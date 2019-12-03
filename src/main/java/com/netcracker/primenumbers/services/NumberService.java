@@ -17,6 +17,8 @@ public interface NumberService {
 
     Page<Number> getAll(Pageable pageable);
 
+    Page<Number> getAllByUser(Pageable pageable);
+
 
 
 }

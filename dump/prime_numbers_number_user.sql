@@ -16,32 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `number`
+-- Table structure for table `number_user`
 --
 
-DROP TABLE IF EXISTS `number`;
+DROP TABLE IF EXISTS `number_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `number` (
-  `number_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `is_prime` bit(1) DEFAULT NULL,
-  `number_value` bigint(20) DEFAULT NULL,
-  `first_user_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`number_id`),
-  UNIQUE KEY `UK_23pr9e8jjarvy3e3do8ki8wk` (`number_value`),
-  KEY `FK3np25v4ocrnxu5jpxckajd61b` (`first_user_id`),
-  CONSTRAINT `FK3np25v4ocrnxu5jpxckajd61b` FOREIGN KEY (`first_user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `number_user` (
+  `number_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`number_id`,`user_id`),
+  KEY `FKiq6gtfh26b70oe5oon5e7wra4` (`user_id`),
+  CONSTRAINT `FKiq6gtfh26b70oe5oon5e7wra4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `FKpwpppbcr0g4dttxmy3erqcva0` FOREIGN KEY (`number_id`) REFERENCES `number` (`number_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `number`
+-- Dumping data for table `number_user`
 --
 
-LOCK TABLES `number` WRITE;
-/*!40000 ALTER TABLE `number` DISABLE KEYS */;
-INSERT INTO `number` VALUES (1,_binary '',5,1),(2,_binary '',3,1),(3,_binary '\0',12,1),(4,_binary '\0',34,3),(5,_binary '\0',12345,3);
-/*!40000 ALTER TABLE `number` ENABLE KEYS */;
+LOCK TABLES `number_user` WRITE;
+/*!40000 ALTER TABLE `number_user` DISABLE KEYS */;
+INSERT INTO `number_user` VALUES (1,1),(2,1),(3,1),(4,1),(1,3),(4,3),(5,3);
+/*!40000 ALTER TABLE `number_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 14:15:41
+-- Dump completed on 2019-12-03 14:15:40

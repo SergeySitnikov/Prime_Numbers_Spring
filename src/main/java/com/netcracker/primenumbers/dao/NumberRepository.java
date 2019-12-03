@@ -15,4 +15,9 @@ public interface NumberRepository extends JpaRepository<Number, Long> {
     Page<Number> findAllByFirstUser(User user, Pageable pageable);
 
     Page<Number> findAll(Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from number join number_user on " +
+            "number.number_id = number_user.number_id where user_id = ?1")
+    Page<Number> findAllByUserId(Pageable pageable, long id);
 }
+

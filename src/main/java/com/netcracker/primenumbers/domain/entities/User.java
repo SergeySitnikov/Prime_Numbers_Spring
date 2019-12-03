@@ -21,8 +21,8 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-//    @ManyToMany(mappedBy = "users")
-//    private Set<Number> numbers;
+    @ManyToMany(mappedBy = "users")
+    private Set<Number> numbers;
 
     @OneToMany(mappedBy = "firstUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},  fetch = FetchType.EAGER)
     private Set<Number> firstInNumbers;
@@ -38,13 +38,13 @@ public class User {
         this.firstInNumbers = firstInNumbers;
     }
 
-//    public Set<Number> getNumbers() {
-//        return numbers;
-//    }
-//
-//    public void setNumbers(Set<Number> numbers) {
-//        this.numbers = numbers;
-//    }
+    public Set<Number> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(Set<Number> numbers) {
+        this.numbers = numbers;
+    }
 
     public Boolean hasRole(String role) {
         return this.roles.stream().map(x->x.getRole()).anyMatch(role::equals);

@@ -28,7 +28,7 @@ CREATE TABLE `user` (
   `password` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UK_ew1hvam8uwaknuaellwhqchhb` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Sergey','$2a$10$gYo7kXI4Qw.RdC5EvjMO1.pwfvnQvMvByN4N2Fc97pwNrmOKoakV6');
+INSERT INTO `user` VALUES (1,'Sergey','$2a$10$0c9NgUG6XgMZLv985H/eaeCcTiRxHa4W9RmhjldrZo.Qo/L3WPXta'),(3,'test','$2a$10$UVVL8xRi9Qdm/Rbq/iYt0ejBr/VWohx8e5n1HQcNTRoioA2jQnsAu');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-02 22:30:33
+-- Dump completed on 2019-12-03 14:15:40
