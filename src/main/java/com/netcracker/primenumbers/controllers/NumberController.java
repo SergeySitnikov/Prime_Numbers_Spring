@@ -3,20 +3,19 @@ package com.netcracker.primenumbers.controllers;
 import com.netcracker.primenumbers.domain.UserDetailsImpl;
 import com.netcracker.primenumbers.domain.entities.User;
 import com.netcracker.primenumbers.domain.logicOfApp.*;
+import com.netcracker.primenumbers.forms.NumberCheckForm;
+import com.netcracker.primenumbers.forms.validators.NumberCheckFormValidator;
 import com.netcracker.primenumbers.services.NumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/find")
@@ -25,48 +24,78 @@ public class NumberController {
     @Autowired
     private NumberService numberService;
 
-    @GetMapping()
-    public String findNumber(@RequestParam(required = false, value = "number") String number, Model model, Authentication auth) {
-        if (number == null) {
-            model.addAttribute("answer", "");
-            return "finder";
+    @Autowired
+    private NumberCheckFormValidator formValidator;
+
+    @InitBinder("numberCheckForm")
+    private void initBinder(WebDataBinder binder) {
+        binder.addValidators(this.formValidator);
+    }
+
+    @GetMapping
+    public String getFile(Model model, NumberCheckForm numberCheckForm) {
+        model.addAttribute("answer", "");
+        model.addAttribute("numberCheckForm", numberCheckForm);
+        return "finder";
+    }
+
+    @PostMapping
+    public String checkNumber(Model model, @Valid @ModelAttribute("numberCheckForm") NumberCheckForm numberCheckForm, BindingResult binding, Authentication auth) {
+        if (binding.hasErrors()) {
+            return "redirect:/find";
         }
-        long numberL;
+        Long number;
         try {
-            numberL = Long.parseLong(number);
+            number = Long.parseLong(numberCheckForm.getNumber());
         } catch (NumberFormatException ex) {
             return "redirect:/find";
         }
-        ResultOfPrime result = numberService.getResult(numberL);
+        if (number < 0) {
+            return "redirect:/find";
+        }
+        ResultOfPrime result = numberService.getResult(number);
         User user = ((UserDetailsImpl) auth.getPrincipal()).getUser();
-        switch(result) {
+        String answerY = "Your number is prime";
+        String answerN = "Your number isn't prime";
+        switch (result) {
             case PRIME:
-                model.addAttribute("answer", "Your number is prime");
+                model.addAttribute("answer", answerY);
                 break;
             case NOT_PRIME:
-                model.addAttribute("answer", "Your number isn't prime");
+                model.addAttribute("answer", answerN);
                 break;
             case NOT_EXIST:
-                MillerRabin millerRabin = new MillerRabin(numberL);
-                TestFerma ferma = new TestFerma(numberL);
-                SolovayStrassen solovayStrassen = new SolovayStrassen(numberL);
                 boolean resultB = false;
-                Optional<Boolean> any = Stream.of(millerRabin, ferma, solovayStrassen).parallel().map(it -> it.isPrimeNumber()).filter(it -> it).findAny();
-                if (any.isPresent()) {
-                    SearchPrimeNumberByEnumeration enumeration = new SearchPrimeNumberByEnumeration(numberL);
+                switch (numberCheckForm.getMethod()) {
+                    case "miller":
+                        MillerRabin millerRabin = new MillerRabin(number);
+                        if (millerRabin.isPrimeNumber()) resultB = true;
+                        break;
+                    case "ferma":
+                        TestFerma ferma = new TestFerma(number);
+                        if (ferma.isPrimeNumber()) resultB = true;
+                        break;
+                    case "solovay":
+                        SolovayStrassen solovayStrassen = new SolovayStrassen(number);
+                        if (solovayStrassen.isPrimeNumber()) resultB = true;
+                        break;
+                }
+                if (resultB) {
+                    SearchPrimeNumberByEnumeration enumeration = new SearchPrimeNumberByEnumeration(number);
                     if (enumeration.isPrimeNumber()) {
                         resultB = true;
                     }
                 }
                 try {
-                    this.numberService.addNumber(numberL, resultB, user);
+                    this.numberService.addNumber(number, resultB, user);
                 } catch (SQLException ex) {
-
+                    return "redirect:/find";
                 }
-                model.addAttribute("answer", resultB ? "Your number is prime" : "Your number isn't prime");
+                model.addAttribute("answer", resultB ? answerY : answerN);
                 break;
         }
 
         return "finder";
     }
+
 }

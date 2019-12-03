@@ -38,7 +38,7 @@ CREATE TABLE `number_user` (
 
 LOCK TABLES `number_user` WRITE;
 /*!40000 ALTER TABLE `number_user` DISABLE KEYS */;
-INSERT INTO `number_user` VALUES (1,1),(2,1),(3,1),(4,1),(1,3),(4,3),(5,3);
+INSERT INTO `number_user` VALUES (1,1),(2,1),(3,1),(4,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(1,3),(4,3),(5,3);
 /*!40000 ALTER TABLE `number_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 14:15:40
+-- Dump completed on 2019-12-03 15:41:37

@@ -31,7 +31,7 @@ CREATE TABLE `number` (
   UNIQUE KEY `UK_23pr9e8jjarvy3e3do8ki8wk` (`number_value`),
   KEY `FK3np25v4ocrnxu5jpxckajd61b` (`first_user_id`),
   CONSTRAINT `FK3np25v4ocrnxu5jpxckajd61b` FOREIGN KEY (`first_user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `number` (
 
 LOCK TABLES `number` WRITE;
 /*!40000 ALTER TABLE `number` DISABLE KEYS */;
-INSERT INTO `number` VALUES (1,_binary '',5,1),(2,_binary '',3,1),(3,_binary '\0',12,1),(4,_binary '\0',34,3),(5,_binary '\0',12345,3);
+INSERT INTO `number` VALUES (1,_binary '',5,1),(2,_binary '',3,1),(3,_binary '\0',12,1),(4,_binary '\0',34,3),(5,_binary '\0',12345,3),(6,_binary '',344567,1),(7,_binary '\0',213213213,1),(8,_binary '',21313,1),(9,_binary '\0',23213,1),(10,_binary '\0',3434,1),(11,_binary '\0',343,1),(12,_binary '\0',54545,1);
 /*!40000 ALTER TABLE `number` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 14:15:41
+-- Dump completed on 2019-12-03 15:41:39

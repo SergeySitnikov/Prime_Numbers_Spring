@@ -28,7 +28,7 @@ CREATE TABLE `user` (
   `password` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UK_ew1hvam8uwaknuaellwhqchhb` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 14:15:40
+-- Dump completed on 2019-12-03 15:41:38
