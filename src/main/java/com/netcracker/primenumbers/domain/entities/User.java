@@ -24,7 +24,7 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Number> numbers;
 
-    @OneToMany(mappedBy = "firstUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE},  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "firstUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},  fetch = FetchType.EAGER)
     private Set<Number> firstInNumbers;
 
     public User() {

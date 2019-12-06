@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.profile}"></title>
+</head>
+<body>
+<div th:text="${user}"></div>
+<div th:text="--------------------------"></div>
+<div>
+    <label th:text="#{profile.label.all}"></label>
+    <a th:href="@{/profile/all}">
+        <button th:text="#{button.profile.get}"></button>
+    </a>
+</div>
+<div>
+    <label th:text="#{profile.label.first}"></label>
+    <a th:href="@{/profile/my}">
+        <button th:text="#{button.profile.get}"></button>
+    </a>
+</div>
+<div>
+    <label th:text="#{profile.label.my.numbers}"></label>
+    <a th:href="@{/profile/allMy}">
+        <button th:text="#{button.profile.get}"></button>
+    </a>
+</div>
+<a th:href="@{/find}">
+    <button th:text="#{panel.button.back}"></button>
+</a>
+</body>
+</html>

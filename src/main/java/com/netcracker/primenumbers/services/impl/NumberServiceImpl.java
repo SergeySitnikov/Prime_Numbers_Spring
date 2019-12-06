@@ -7,7 +7,8 @@ import com.netcracker.primenumbers.domain.entities.User;
 import com.netcracker.primenumbers.domain.logicOfApp.ResultOfPrime;
 import com.netcracker.primenumbers.services.NumberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,22 @@ public class NumberServiceImpl implements NumberService {
         users.add(user);
         n.setUsers(users);
         this.numberRepository.save(n);
+    }
+
+    @Override
+    public Page<Number> getFirstNumbersByUser(User user, Pageable pageable) {
+        return this.numberRepository.findAllByFirstUser(user, pageable);
+    }
+
+    @Override
+    public Page<Number> getAll(Pageable pageable) {
+        return this.numberRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Number> getAllByUser(Pageable pageable) {
+
+        return this.numberRepository.findAllByUserId(pageable, ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getUserId());
     }
 
     private void addUserToNumber(Number number) {

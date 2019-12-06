@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.number.table}"></title>
+</head>
+<body>
+<table>
+    <tr>
+        <th th:text="#{profile.label.all}"></th>
+        <th th:text="#{table.user.login}"></th>
+    </tr>
+
+
+    <th:block th:each="n : ${numbers}">
+        <tr>
+            <td th:text="${n.getNumberValue()}"></td>
+            <td th:text="${n.getFirstUser().login}"></td>
+        </tr>
+
+
+    </th:block>
+</table>
+<nav th:if="${numbers.totalPages > 1}">
+    <div>
+        <a th:if="${numbers.hasPrevious()}"
+           th:href="@{/profile/all(page = ${numbers.number - 1})}">&#8592;</a>
+
+        <th:block th:each="i : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+            <a th:if="${numbers.number == i - 1 }"
+               th:text="${i}"
+               th:href="@{/profile/all(page = ${i} - 1)}"></a>
+            <a th:unless="${numbers.number == i - 1}"
+               th:href="@{/profile/all(page = ${i} - 1)}" th:text="${i}"></a>
+        </th:block>
+        </a>
+        <a th:if="${numbers.hasNext()}"
+           th:href="@{/profile/all(page = ${numbers.number + 1})}">&#8594;</a>
+    </div>
+</nav>
+<a th:href="@{/profile}"><button th:text="#{panel.button.back}"></button></a>
+</body>
+</html>

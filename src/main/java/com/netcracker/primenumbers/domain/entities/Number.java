@@ -21,8 +21,8 @@ public class Number {
     @JoinTable(name = "number_user", inverseJoinColumns = @JoinColumn(name = "user_id"), joinColumns = @JoinColumn(name = "number_id"))
     private Set<User> users;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "first_user_id")
     private User firstUser;
 
     public Number() {
