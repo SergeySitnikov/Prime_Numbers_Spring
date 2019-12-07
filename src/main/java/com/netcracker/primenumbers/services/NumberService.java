@@ -19,6 +19,8 @@ public interface NumberService {
 
     Page<Number> getAllByUser(Pageable pageable);
 
+    boolean isPrimeFromNotExistBlock(String method, Long number);
+
 
 
 }

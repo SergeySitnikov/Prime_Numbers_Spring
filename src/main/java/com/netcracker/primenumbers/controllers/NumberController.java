@@ -65,27 +65,7 @@ public class NumberController {
                 model.addAttribute("answer", answerN);
                 break;
             case NOT_EXIST:
-                boolean resultB = false;
-                switch (numberCheckForm.getMethod()) {
-                    case "miller":
-                        MillerRabin millerRabin = new MillerRabin(number);
-                        if (millerRabin.isPrimeNumber()) resultB = true;
-                        break;
-                    case "ferma":
-                        TestFerma ferma = new TestFerma(number);
-                        if (ferma.isPrimeNumber()) resultB = true;
-                        break;
-                    case "solovay":
-                        SolovayStrassen solovayStrassen = new SolovayStrassen(number);
-                        if (solovayStrassen.isPrimeNumber()) resultB = true;
-                        break;
-                }
-                if (resultB) {
-                    SearchPrimeNumberByEnumeration enumeration = new SearchPrimeNumberByEnumeration(number);
-                    if (enumeration.isPrimeNumber()) {
-                        resultB = true;
-                    }
-                }
+               boolean resultB = this.numberService.isPrimeFromNotExistBlock(numberCheckForm.getMethod(), number);
                 try {
                     this.numberService.addNumber(number, resultB, user);
                 } catch (SQLException ex) {

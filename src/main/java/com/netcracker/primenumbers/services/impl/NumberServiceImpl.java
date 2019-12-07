@@ -4,7 +4,7 @@ import com.netcracker.primenumbers.dao.NumberRepository;
 import com.netcracker.primenumbers.domain.UserDetailsImpl;
 import com.netcracker.primenumbers.domain.entities.Number;
 import com.netcracker.primenumbers.domain.entities.User;
-import com.netcracker.primenumbers.domain.logicOfApp.ResultOfPrime;
+import com.netcracker.primenumbers.domain.logicOfApp.*;
 import com.netcracker.primenumbers.services.NumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,6 +60,31 @@ public class NumberServiceImpl implements NumberService {
     public Page<Number> getAllByUser(Pageable pageable) {
 
         return this.numberRepository.findAllByUserId(pageable, ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getUserId());
+    }
+
+    @Override
+    public boolean isPrimeFromNotExistBlock(String method, Long number) {
+        boolean resultB = false;
+        SearchPrimeNumbers searchPrimeNumbers;
+        switch (method) {
+            case "miller":
+                searchPrimeNumbers = new MillerRabin(number);
+                if (searchPrimeNumbers.isPrimeNumber()) resultB = true;
+                break;
+            case "ferma":
+                searchPrimeNumbers = new TestFerma(number);
+                if (searchPrimeNumbers.isPrimeNumber()) resultB = true;
+                break;
+            case "solovay":
+                searchPrimeNumbers = new SolovayStrassen(number);
+                if (searchPrimeNumbers.isPrimeNumber()) resultB = true;
+                break;
+        }
+        if (resultB) {
+            searchPrimeNumbers = new SearchPrimeNumberByEnumeration(number);
+            resultB = searchPrimeNumbers.isPrimeNumber();
+        }
+        return resultB;
     }
 
     private void addUserToNumber(Number number) {
